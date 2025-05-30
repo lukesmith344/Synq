@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct synqApp: App {
+    @StateObject private var authService = AuthenticationService()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if authService.isAuthenticated {
+                MainView(authService: authService)
+            } else {
+                LoginView()
+            }
         }
     }
 }
