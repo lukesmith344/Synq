@@ -16,6 +16,7 @@ struct MainView: View {
             VStack {
                 Text("Friends' Playlist")
                     .font(.title)
+                    .foregroundColor(Color("MintGreen"))
                     .padding()
                 
                 Text("Your friends' daily drops will appear here")
@@ -44,7 +45,8 @@ struct MainView: View {
             }
             .tag(2)
         }
-        .navigationTitle("Synq")
+        .background(Color("OffWhite").ignoresSafeArea())
+        .navigationTitle(Text("Synq").foregroundColor(Color("MintGreen")))
     }
 }
 

@@ -29,9 +29,22 @@
 		07EAB9462DE9EBE200282C1E /* synqUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = synqUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0785EE8A2DEABEED00507B38 /* Exceptions for "synq" folder in "synq" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 07EAB92A2DE9EBE200282C1E /* synq */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		07EAB92D2DE9EBE200282C1E /* synq */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0785EE8A2DEABEED00507B38 /* Exceptions for "synq" folder in "synq" target */,
+			);
 			path = synq;
 			sourceTree = "<group>";
 		};

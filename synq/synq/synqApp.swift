@@ -13,10 +13,8 @@ struct synqApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if authService.isAuthenticated {
-                MainView(authService: authService)
-            } else {
-                LoginView()
+            NavigationStack {
+                SplashView()
             }
         }
     }

@@ -16,13 +16,14 @@ struct SongSearchView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
+                .background(Color("OffWhite"))
             }
             .padding(.vertical, 8)
             
             // Search Field
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color("MintGreen"))
                 
                 TextField("Search songs...", text: $searchText)
                     .textFieldStyle(.plain)
@@ -39,12 +40,12 @@ struct SongSearchView: View {
                         searchService.clearSearch()
                     }) {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color("MintGreen"))
                     }
                 }
             }
             .padding(8)
-            .background(Color(.systemGray6))
+            .background(Color("OffWhite"))
             .cornerRadius(10)
             .padding(.horizontal)
             
@@ -61,6 +62,7 @@ struct SongSearchView: View {
             } else {
                 List(searchService.searchResults) { song in
                     SongRow(song: song)
+                        .listRowBackground(Color("OffWhite"))
                         .contentShape(Rectangle())
                         .onTapGesture {
                             selectedSong = song
@@ -68,8 +70,10 @@ struct SongSearchView: View {
                         }
                 }
                 .listStyle(.plain)
+                .background(Color("OffWhite"))
             }
         }
+        .background(Color("OffWhite").ignoresSafeArea())
         .alert("Drop Song", isPresented: $showingDropConfirmation) {
             Button("Cancel", role: .cancel) { }
             Button("Drop") {
@@ -125,7 +129,7 @@ struct SongRow: View {
             
             // Service Icon
             Image(systemName: song.service == .appleMusic ? "apple.logo" : "music.note")
-                .foregroundColor(.secondary)
+                .foregroundColor(Color("MintGreen"))
         }
         .padding(.vertical, 4)
     }
