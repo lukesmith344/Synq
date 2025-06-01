@@ -6,6 +6,9 @@ struct OnboardingBirthdayView: View {
     
     var body: some View {
         VStack {
+            // Progress Indicator
+            OnboardingProgressView(currentStep: 2, totalSteps: 4)
+                .padding(.top, 32)
             Spacer()
             VStack(spacing: 24) {
                 Text("When's your birthday?")

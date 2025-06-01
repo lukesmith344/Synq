@@ -6,6 +6,9 @@ struct OnboardingContactsView: View {
     
     var body: some View {
         VStack {
+            // Progress Indicator
+            OnboardingProgressView(currentStep: 4, totalSteps: 4)
+                .padding(.top, 32)
             Spacer()
             VStack(spacing: 20) {
                 Text("Find your friends on Synq")

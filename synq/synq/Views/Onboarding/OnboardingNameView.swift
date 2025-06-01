@@ -6,6 +6,9 @@ struct OnboardingNameView: View {
     
     var body: some View {
         VStack {
+            // Progress Indicator
+            OnboardingProgressView(currentStep: 1, totalSteps: 4)
+                .padding(.top, 32)
             Spacer()
             VStack(spacing: 24) {
                 Text("What's your name?")
@@ -36,6 +39,20 @@ struct OnboardingNameView: View {
             NavigationLink(destination: OnboardingBirthdayView(viewModel: viewModel), isActive: $navigate) { EmptyView() }
         }
         .navigationBarBackButtonHidden(true)
+    }
+}
+
+struct OnboardingProgressView: View {
+    let currentStep: Int
+    let totalSteps: Int
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(1...totalSteps, id: \.self) { step in
+                Circle()
+                    .fill(step <= currentStep ? Color("FreshMint") : Color(.systemGray4))
+                    .frame(width: 10, height: 10)
+            }
+        }
     }
 }
 
