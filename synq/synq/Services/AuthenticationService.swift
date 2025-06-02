@@ -4,12 +4,15 @@ import SwiftUI
 
 class AuthenticationService: ObservableObject {
     @Published var isAuthenticated = false
-    @Published var user: User?
+    @Published var user: UserProfile?
+    private let profileService = UserProfileService()
     
-    struct User {
-        let id: String
-        let email: String?
-        let name: String?
+    init() {
+        // Check for existing session on launch
+        if let profile = profileService.currentProfile {
+            self.user = profile
+            self.isAuthenticated = true
+        }
     }
     
     func signInWithApple() async throws {
@@ -27,22 +30,26 @@ class AuthenticationService: ObservableObject {
         if let appleIDCredential = result as? ASAuthorizationAppleIDCredential {
             let userId = appleIDCredential.user
             let email = appleIDCredential.email
-            let name = appleIDCredential.fullName
+            let name = appleIDCredential.fullName?.formatted()
             
-            let user = User(
+            // Create or update user profile
+            let profile = UserProfile(
                 id: userId,
-                email: email,
-                name: name?.formatted()
+                displayName: name,
+                email: email
             )
             
+            profileService.saveProfile(profile)
+            
             DispatchQueue.main.async {
-                self.user = user
+                self.user = profile
                 self.isAuthenticated = true
             }
         }
     }
     
     func signOut() {
+        profileService.clearProfile()
         DispatchQueue.main.async {
             self.user = nil
             self.isAuthenticated = false

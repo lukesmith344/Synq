@@ -41,14 +41,14 @@ struct SynqCardView: View {
                 albumImage
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 200)
+                    .frame(height: 170)
                     .cornerRadius(14)
                     .shadow(radius: 2)
                     .frame(maxWidth: .infinity)
             } else {
                 Text("🎵")
                     .font(.system(size: 90))
-                    .frame(height: 200)
+                    .frame(height: 170)
                     .frame(maxWidth: .infinity)
             }
             VStack(alignment: .leading, spacing: 4) {
@@ -58,24 +58,24 @@ struct SynqCardView: View {
                     .font(.system(size: 16))
                     .foregroundColor(.secondary)
             }
-            .padding(.top, 10)
+            .padding(.top, 6)
             if let caption = caption {
                 Text(caption)
                     .font(.system(size: 15))
                     .foregroundColor(.gray)
-                    .padding(.top, 6)
+                    .padding(.top, 3)
             }
             Spacer(minLength: 0)
             if let sharedAgo = sharedAgo {
                 Text(sharedAgo)
                     .font(.system(size: 13))
                     .foregroundColor(.gray)
-                    .padding(.top, 12)
+                    .padding(.top, 6)
             }
         }
-        .padding(.vertical, 28)
+        .padding(.vertical, 16)
         .padding(.horizontal, 18)
-        .frame(height: UIScreen.main.bounds.height * 0.65)
+        .frame(height: UIScreen.main.bounds.height * 0.75)
         .frame(maxWidth: .infinity)
         .background(Color(red: 0.965, green: 0.965, blue: 0.965))
         .cornerRadius(16)

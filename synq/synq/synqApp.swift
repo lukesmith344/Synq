@@ -15,15 +15,18 @@ struct synqApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                if onboardingComplete {
-                    FeedView()
-                } else {
+                if !authService.isAuthenticated {
+                    LoginView()
+                } else if !onboardingComplete {
                     SplashView()
                         .onDisappear {
                             onboardingComplete = true
                         }
+                } else {
+                    FeedView()
                 }
             }
         }
     }
 }
+
