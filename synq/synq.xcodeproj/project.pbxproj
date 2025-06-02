@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0785EE9B2DECA67000507B38 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0785EE9A2DECA67000507B38 /* Contacts.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		07EAB93D2DE9EBE200282C1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0785EE9A2DECA67000507B38 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
 		07EAB92B2DE9EBE200282C1E /* synq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = synq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07EAB93C2DE9EBE200282C1E /* synqTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = synqTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07EAB9462DE9EBE200282C1E /* synqUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = synqUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0785EE9B2DECA67000507B38 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,12 +91,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0785EE992DECA66F00507B38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0785EE9A2DECA67000507B38 /* Contacts.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		07EAB9222DE9EBE100282C1E = {
 			isa = PBXGroup;
 			children = (
 				07EAB92D2DE9EBE200282C1E /* synq */,
 				07EAB93F2DE9EBE200282C1E /* synqTests */,
 				07EAB9492DE9EBE200282C1E /* synqUITests */,
+				0785EE992DECA66F00507B38 /* Frameworks */,
 				07EAB92C2DE9EBE200282C1E /* Products */,
 			);
 			sourceTree = "<group>";

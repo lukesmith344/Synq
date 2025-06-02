@@ -10,11 +10,19 @@ import SwiftUI
 @main
 struct synqApp: App {
     @StateObject private var authService = AuthenticationService()
+    @State private var onboardingComplete = false
     
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                SplashView()
+                if onboardingComplete {
+                    FeedView()
+                } else {
+                    SplashView()
+                        .onDisappear {
+                            onboardingComplete = true
+                        }
+                }
             }
         }
     }

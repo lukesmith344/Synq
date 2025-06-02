@@ -2,7 +2,13 @@ import SwiftUI
 
 struct OnboardingContactsView: View {
     @ObservedObject var viewModel: OnboardingViewModel
+    @StateObject private var contactsManager = ContactsManager()
     @State private var finished = false
+    @State private var skipped = false
+    
+    var canFinish: Bool {
+        skipped || !contactsManager.matchedContacts.isEmpty || contactsManager.permissionDenied
+    }
     
     var body: some View {
         VStack {
@@ -15,8 +21,8 @@ struct OnboardingContactsView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
-                if !viewModel.contactsSynced {
-                    Button(action: { viewModel.syncContacts() }) {
+                if contactsManager.matchedContacts.isEmpty && !contactsManager.permissionDenied && !skipped {
+                    Button(action: { contactsManager.requestAndFetchContacts() }) {
                         HStack {
                             Image(systemName: "person.2.fill")
                             Text("Sync Contacts")
@@ -29,12 +35,17 @@ struct OnboardingContactsView: View {
                         .cornerRadius(12)
                     }
                     .padding(.horizontal, 40)
-                } else {
+                } else if contactsManager.permissionDenied && !skipped {
+                    Text("Permission denied. Please enable Contacts access in Settings.")
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                } else if !skipped {
                     VStack(spacing: 8) {
                         Text("Matched Friends:")
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        ForEach(viewModel.matchedContacts, id: \.self) { contact in
+                        ForEach(contactsManager.matchedContacts, id: \.self) { contact in
                             HStack {
                                 Image(systemName: "person.crop.circle")
                                     .foregroundColor(Color("FreshMint"))
@@ -43,9 +54,28 @@ struct OnboardingContactsView: View {
                             }
                         }
                     }
+                } else {
+                    Text("You chose to skip syncing contacts.")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding()
                 }
             }
             Spacer()
+            // Skip Button
+            Button(action: {
+                skipped = true
+                finished = true
+            }) {
+                Text("Skip")
+                    .font(.subheadline)
+                    .foregroundColor(Color("FreshMint"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+            }
+            .padding(.horizontal, 40)
+            // Finish Button
             Button(action: { finished = true }) {
                 Text("Finish")
                     .font(.headline)
@@ -57,8 +87,9 @@ struct OnboardingContactsView: View {
             }
             .padding(.horizontal, 40)
             .padding(.bottom, 32)
-            .disabled(!viewModel.contactsSynced)
+            .disabled(!canFinish)
             // NavigationLink to main app or dismiss onboarding can go here
+            NavigationLink(destination: FeedView(), isActive: $finished) { EmptyView() }
         }
         .navigationBarBackButtonHidden(true)
     }
