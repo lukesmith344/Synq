@@ -1,6 +1,7 @@
 import Foundation
 import AuthenticationServices
 import SwiftUI
+import FirebaseMessaging
 
 class AuthenticationService: ObservableObject {
     @Published var isAuthenticated = false
@@ -44,6 +45,14 @@ class AuthenticationService: ObservableObject {
             DispatchQueue.main.async {
                 self.user = profile
                 self.isAuthenticated = true
+                // Subscribe to dailyDrop topic after login
+                Messaging.messaging().subscribe(toTopic: "dailyDrop") { error in
+                    if let error = error {
+                        print("Failed to subscribe to dailyDrop: \(error)")
+                    } else {
+                        print("Subscribed to dailyDrop topic")
+                    }
+                }
             }
         }
     }

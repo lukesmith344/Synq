@@ -1,10 +1,12 @@
 import SwiftUI
 import AuthenticationServices
+import FirebaseMessaging
 
 struct LoginView: View {
-    @StateObject private var authService = AuthenticationService()
+    @ObservedObject var authService: AuthenticationService
     @State private var showError = false
     @State private var errorMessage = ""
+    @State private var skipAuth = false
     
     var body: some View {
         ZStack {
@@ -53,6 +55,32 @@ struct LoginView: View {
                 .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
                 .padding(.top, 16)
                 
+                // Skip button for testing
+                Button(action: {
+                    // Create a mock profile for testing
+                    let mockProfile = UserProfile(
+                        id: "test_user_\(UUID().uuidString)",
+                        displayName: "Test User",
+                        email: "test@example.com"
+                    )
+                    authService.user = mockProfile
+                    authService.isAuthenticated = true
+                    // Subscribe to dailyDrop topic after skip
+                    Messaging.messaging().subscribe(toTopic: "dailyDrop") { error in
+                        if let error = error {
+                            print("Failed to subscribe to dailyDrop: \(error)")
+                        } else {
+                            print("Subscribed to dailyDrop topic (skip)")
+                        }
+                    }
+                    skipAuth = true
+                }) {
+                    Text("Skip Sign In (Testing Only)")
+                        .font(.subheadline)
+                        .foregroundColor(Color("FreshMint"))
+                        .padding(.top, 16)
+                }
+                
                 Spacer()
             }
             .padding(.horizontal, 40)
@@ -62,9 +90,12 @@ struct LoginView: View {
         } message: {
             Text(errorMessage)
         }
+        .navigationDestination(isPresented: $skipAuth) {
+            OnboardingNameView()
+        }
     }
 }
 
 #Preview {
-    LoginView()
+    LoginView(authService: AuthenticationService())
 } 

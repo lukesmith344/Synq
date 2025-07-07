@@ -9,6 +9,8 @@ class OnboardingViewModel: ObservableObject {
     @Published var contactsSynced: Bool = false
     @Published var matchedContacts: [String] = []
     
+    private let profileService = UserProfileService()
+    
     // Mock username check
     func checkUsernameAvailability() {
         // Simulate async check
@@ -25,5 +27,11 @@ class OnboardingViewModel: ObservableObject {
             self.contactsSynced = true
             self.matchedContacts = ["Taylor Swift", "Drake", "Phoebe Bridgers"]
         }
+    }
+    
+    func completeOnboarding() {
+        guard var profile = profileService.currentProfile else { return }
+        profile.updateOnboarding(name: name, birthday: birthday, username: username)
+        profileService.saveProfile(profile)
     }
 } 

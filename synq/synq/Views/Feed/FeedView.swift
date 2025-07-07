@@ -51,7 +51,6 @@ struct FeedView: View {
             // Feed content (vertical scroll)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    Color.clear.frame(height: 32)
                     ForEach(0..<mockCards.count, id: \.self) { i in
                         mockCards[i]
                             .frame(maxWidth: .infinity)
@@ -69,7 +68,7 @@ struct FeedView: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .padding(.top, 0)
+                .padding(.top, 100)
                 .padding(.bottom, 20)
             }
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
@@ -90,7 +89,8 @@ struct FeedView: View {
                         .foregroundColor(.black)
                 }
                 .padding(.horizontal)
-                .padding(.top, 10)
+                .padding(.top, 12)
+                .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 44) // Respect safe area
                 // Inline tab selectors
                 HStack(spacing: 32) {
                     Button(action: { selectedTab = 0 }) {
@@ -117,7 +117,6 @@ struct FeedView: View {
                     }
                 }
                 .padding(.top, 4)
-                .padding(.bottom, 4)
                 Divider().background(Color.black.opacity(0.08))
             }
             .background(

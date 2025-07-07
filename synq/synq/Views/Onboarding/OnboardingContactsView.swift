@@ -66,6 +66,7 @@ struct OnboardingContactsView: View {
             // Skip Button
             Button(action: {
                 skipped = true
+                viewModel.completeOnboarding()
                 finished = true
             }) {
                 Text("Skip")
@@ -76,7 +77,10 @@ struct OnboardingContactsView: View {
             }
             .padding(.horizontal, 40)
             // Finish Button
-            Button(action: { finished = true }) {
+            Button(action: { 
+                viewModel.completeOnboarding()
+                finished = true 
+            }) {
                 Text("Finish")
                     .font(.headline)
                     .foregroundColor(.white)
@@ -88,8 +92,8 @@ struct OnboardingContactsView: View {
             .padding(.horizontal, 40)
             .padding(.bottom, 32)
             .disabled(!canFinish)
-            // NavigationLink to main app or dismiss onboarding can go here
-            NavigationLink(destination: FeedView(), isActive: $finished) { EmptyView() }
+            // NavigationLink to main app
+            NavigationLink(destination: MainView(authService: AuthenticationService()), isActive: $finished) { EmptyView() }
         }
         .navigationBarBackButtonHidden(true)
     }
