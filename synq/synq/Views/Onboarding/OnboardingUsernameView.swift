@@ -81,5 +81,5 @@ struct OnboardingUsernameView: View {
 }
 
 #Preview {
-    OnboardingUsernameView(viewModel: OnboardingViewModel())
+    OnboardingUsernameView(viewModel: OnboardingViewModel(authService: AuthenticationService()))
 } 

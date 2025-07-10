@@ -62,7 +62,7 @@ struct synqApp: App {
                 if !authService.isAuthenticated {
                     LoginView(authService: authService)
                 } else if let profile = authService.user, !profile.onboardingComplete {
-                    OnboardingNameView()
+                    OnboardingNameView(authService: authService)
                 } else {
                     MainView(authService: authService)
                 }

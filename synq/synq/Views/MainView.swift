@@ -38,7 +38,7 @@ struct MainView: View {
                                 .padding(.top, 20)
                             
                             // User Name
-                            Text(authService.user?.displayName ?? "Synq User")
+                            Text(authService.user?.name ?? "Synq User")
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary) // Use primary color for dark text on light background
@@ -126,7 +126,9 @@ struct MainView: View {
                             
                             // Sign Out Button
                             Button("Sign Out") {
-                                authService.signOut()
+                                Task {
+                                    try? await authService.signOut()
+                                }
                             }
                             .foregroundColor(.red)
                             .padding()
@@ -165,7 +167,7 @@ struct MainView: View {
     // Provide an AuthenticationService instance for the preview
     let authService = AuthenticationService()
     // Create a mock user profile for previewing the authenticated state
-    let mockUser = UserProfile(id: "preview_id", displayName: "Preview User", onboardingComplete: true)
+    let mockUser = UserProfile(id: "preview_id", uid: "preview_uid", name: "Preview User", username: "previewuser", birthday: Date(), onboardingComplete: true)
     authService.user = mockUser // Set the mock user
     authService.isAuthenticated = true // Set as authenticated
     return MainView(authService: authService)

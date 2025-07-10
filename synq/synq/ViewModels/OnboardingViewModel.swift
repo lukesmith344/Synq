@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 
+@MainActor
 class OnboardingViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var birthday: Date = Calendar.current.date(byAdding: .year, value: -18, to: Date()) ?? Date()
@@ -8,8 +9,14 @@ class OnboardingViewModel: ObservableObject {
     @Published var usernameAvailable: Bool? = nil
     @Published var contactsSynced: Bool = false
     @Published var matchedContacts: [String] = []
+    @Published var isLoading = false
+    @Published var error: Error?
     
-    private let profileService = UserProfileService()
+    let authService: AuthenticationService
+    
+    init(authService: AuthenticationService) {
+        self.authService = authService
+    }
     
     // Mock username check
     func checkUsernameAvailability() {
@@ -29,9 +36,40 @@ class OnboardingViewModel: ObservableObject {
         }
     }
     
-    func completeOnboarding() {
-        guard var profile = profileService.currentProfile else { return }
-        profile.updateOnboarding(name: name, birthday: birthday, username: username)
-        profileService.saveProfile(profile)
+    func completeOnboarding() async throws {
+        guard !name.isEmpty, !username.isEmpty else {
+            throw OnboardingError.invalidData
+        }
+        
+        isLoading = true
+        error = nil
+        
+        do {
+            // Create user profile in Firestore
+            try await authService.createUserProfile(
+                name: name,
+                username: username,
+                birthday: birthday
+            )
+            
+            isLoading = false
+        } catch {
+            self.error = error
+            isLoading = false
+            throw error
+        }
+    }
+}
+
+// MARK: - Custom Errors
+
+enum OnboardingError: Error, LocalizedError {
+    case invalidData
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidData:
+            return "Please fill in all required fields"
+        }
     }
 } 

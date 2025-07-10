@@ -5,6 +5,8 @@ struct OnboardingContactsView: View {
     @StateObject private var contactsManager = ContactsManager()
     @State private var finished = false
     @State private var skipped = false
+    @State private var isLoading = false
+    @State private var error: Error?
     
     var canFinish: Bool {
         skipped || !contactsManager.matchedContacts.isEmpty || contactsManager.permissionDenied
@@ -61,13 +63,22 @@ struct OnboardingContactsView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 }
+                
+                if let error = error {
+                    Text(error.localizedDescription)
+                        .foregroundColor(.red)
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
             }
             Spacer()
             // Skip Button
             Button(action: {
                 skipped = true
-                viewModel.completeOnboarding()
-                finished = true
+                Task {
+                    await completeOnboarding()
+                }
             }) {
                 Text("Skip")
                     .font(.subheadline)
@@ -76,29 +87,52 @@ struct OnboardingContactsView: View {
                     .padding(.vertical, 8)
             }
             .padding(.horizontal, 40)
+            .disabled(isLoading)
             // Finish Button
             Button(action: { 
-                viewModel.completeOnboarding()
-                finished = true 
+                Task {
+                    await completeOnboarding()
+                }
             }) {
-                Text("Finish")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color("FreshMint"))
-                    .cornerRadius(12)
+                HStack {
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(0.8)
+                    }
+                    Text("Finish")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color("FreshMint"))
+                        .cornerRadius(12)
+                }
             }
             .padding(.horizontal, 40)
             .padding(.bottom, 32)
-            .disabled(!canFinish)
+            .disabled(!canFinish || isLoading)
             // NavigationLink to main app
-            NavigationLink(destination: MainView(authService: AuthenticationService()), isActive: $finished) { EmptyView() }
+            NavigationLink(destination: MainView(authService: viewModel.authService), isActive: $finished) { EmptyView() }
         }
         .navigationBarBackButtonHidden(true)
+    }
+    
+    private func completeOnboarding() async {
+        isLoading = true
+        error = nil
+        
+        do {
+            try await viewModel.completeOnboarding()
+            finished = true
+        } catch {
+            self.error = error
+        }
+        
+        isLoading = false
     }
 }
 
 #Preview {
-    OnboardingContactsView(viewModel: OnboardingViewModel())
+    OnboardingContactsView(viewModel: OnboardingViewModel(authService: AuthenticationService()))
 } 

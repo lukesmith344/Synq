@@ -1,7 +1,12 @@
 import SwiftUI
 
 struct SplashView: View {
+    let authService: AuthenticationService
     @State private var navigate = false
+    
+    init(authService: AuthenticationService) {
+        self.authService = authService
+    }
     
     var body: some View {
         ZStack {
@@ -17,11 +22,11 @@ struct SplashView: View {
             }
         }
         .navigationDestination(isPresented: $navigate) {
-            OnboardingNameView()
+            OnboardingNameView(authService: authService)
         }
     }
 }
 
 #Preview {
-    SplashView()
+    SplashView(authService: AuthenticationService())
 } 

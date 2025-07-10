@@ -33,7 +33,7 @@ struct LoginView: View {
                 Spacer()
                 
                 // Sign in with Apple Button
-                SignInWithAppleButton(
+                SignInWithAppleButton(.signIn,
                     onRequest: { request in
                         request.requestedScopes = [.fullName, .email]
                     },
@@ -60,8 +60,11 @@ struct LoginView: View {
                     // Create a mock profile for testing
                     let mockProfile = UserProfile(
                         id: "test_user_\(UUID().uuidString)",
-                        displayName: "Test User",
-                        email: "test@example.com"
+                        uid: "test_user_\(UUID().uuidString)",
+                        name: "Test User",
+                        username: "testuser",
+                        birthday: Date(),
+                        onboardingComplete: true
                     )
                     authService.user = mockProfile
                     authService.isAuthenticated = true
@@ -91,7 +94,7 @@ struct LoginView: View {
             Text(errorMessage)
         }
         .navigationDestination(isPresented: $skipAuth) {
-            OnboardingNameView()
+            OnboardingNameView(authService: authService)
         }
     }
 }

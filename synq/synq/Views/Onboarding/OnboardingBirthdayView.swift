@@ -39,5 +39,5 @@ struct OnboardingBirthdayView: View {
 }
 
 #Preview {
-    OnboardingBirthdayView(viewModel: OnboardingViewModel())
+    OnboardingBirthdayView(viewModel: OnboardingViewModel(authService: AuthenticationService()))
 } 
