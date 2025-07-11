@@ -55,6 +55,7 @@ extension Notification.Name {
 struct synqApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var authService = AuthenticationService()
+    @StateObject private var onboardingViewModel = OnboardingViewModel(authService: AuthenticationService())
     
     var body: some Scene {
         WindowGroup {
@@ -62,7 +63,7 @@ struct synqApp: App {
                 if !authService.isAuthenticated {
                     LoginView(authService: authService)
                 } else if let profile = authService.user, !profile.onboardingComplete {
-                    OnboardingNameView(authService: authService)
+                    OnboardingContainerView(viewModel: onboardingViewModel)
                 } else {
                     MainView(authService: authService)
                 }

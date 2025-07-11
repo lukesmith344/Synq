@@ -1,14 +1,8 @@
 import SwiftUI
 
 struct OnboardingNameView: View {
-    let authService: AuthenticationService
-    @StateObject private var viewModel: OnboardingViewModel
+    @ObservedObject var viewModel: OnboardingViewModel
     @State private var navigate = false
-    
-    init(authService: AuthenticationService) {
-        self.authService = authService
-        self._viewModel = StateObject(wrappedValue: OnboardingViewModel(authService: authService))
-    }
     
     var body: some View {
         VStack {
@@ -63,5 +57,5 @@ struct OnboardingProgressView: View {
 }
 
 #Preview {
-    OnboardingNameView(authService: AuthenticationService())
+    OnboardingNameView(viewModel: OnboardingViewModel(authService: AuthenticationService()))
 } 

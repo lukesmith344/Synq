@@ -11,6 +11,7 @@ class OnboardingViewModel: ObservableObject {
     @Published var matchedContacts: [String] = []
     @Published var isLoading = false
     @Published var error: Error?
+    @Published var onboardingStep: Int = 1
     
     let authService: AuthenticationService
     
@@ -51,8 +52,10 @@ class OnboardingViewModel: ObservableObject {
                 username: username,
                 birthday: birthday
             )
-            
             isLoading = false
+            // Advance onboarding step and print
+            onboardingStep += 1
+            print("[Auth] advanced to onboarding step")
         } catch {
             self.error = error
             isLoading = false

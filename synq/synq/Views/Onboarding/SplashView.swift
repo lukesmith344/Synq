@@ -22,7 +22,7 @@ struct SplashView: View {
             }
         }
         .navigationDestination(isPresented: $navigate) {
-            OnboardingNameView(authService: authService)
+            OnboardingNameView(viewModel: OnboardingViewModel(authService: authService))
         }
     }
 }

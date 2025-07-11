@@ -38,9 +38,14 @@ struct LoginView: View {
                         request.requestedScopes = [.fullName, .email]
                     },
                     onCompletion: { result in
+                        print("[UI] SignInWithAppleButton tapped")
                         Task {
                             do {
+                                print("[UI] Calling signInWithApple()...")
                                 try await authService.signInWithApple()
+                                // After successful sign-in, advance onboarding
+                                skipAuth = true
+                                print("[UI] Finished sign-in, moving to onboarding.")
                             } catch {
                                 showError = true
                                 errorMessage = error.localizedDescription
@@ -54,6 +59,7 @@ struct LoginView: View {
                 .cornerRadius(12)
                 .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
                 .padding(.top, 16)
+                .disabled(authService.isLoading) // Prevent double tap
                 
                 // Skip button for testing
                 Button(action: {
@@ -94,7 +100,7 @@ struct LoginView: View {
             Text(errorMessage)
         }
         .navigationDestination(isPresented: $skipAuth) {
-            OnboardingNameView(authService: authService)
+            OnboardingNameView(viewModel: OnboardingViewModel(authService: authService))
         }
     }
 }

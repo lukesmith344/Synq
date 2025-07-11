@@ -3,6 +3,7 @@ import AuthenticationServices
 import SwiftUI
 import FirebaseAuth
 import FirebaseMessaging
+import CryptoKit
 
 @MainActor
 class AuthenticationService: ObservableObject {
@@ -166,6 +167,7 @@ class AuthenticationService: ObservableObject {
             // Update local user
             self.user = profileService.currentUser
             self.isAuthenticated = true
+            print("[Transition] User profile created and state updated. Should transition to next onboarding screen.")
         } catch {
             print("[Profile] Error creating user profile: \(error)")
             self.error = error
@@ -208,15 +210,12 @@ class AuthenticationService: ObservableObject {
         
         return result
     }
-    
+
+    // Use this utility function for nonce hashing
     private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            String(format: "%02x", $0)
-        }.joined()
-        
-        return hashString
+        let hashed = SHA256.hash(data: inputData)
+        return hashed.compactMap { String(format: "%02x", $0) }.joined()
     }
 }
 
@@ -233,17 +232,6 @@ enum AuthError: Error, LocalizedError {
         case .userNotFound:
             return "User not found"
         }
-    }
-}
-
-// MARK: - SHA256 Extension
-
-import CryptoKit
-
-extension SHA256 {
-    static func hash(data: Data) -> Data {
-        let hash = SHA256.hash(data: data)
-        return Data(hash)
     }
 }
 
