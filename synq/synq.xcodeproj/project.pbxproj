@@ -36,29 +36,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07641DB92E1F4F6B008E2AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0785EE9A2DECA67000507B38 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
 		07EAB92B2DE9EBE200282C1E /* synq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = synq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07EAB93C2DE9EBE200282C1E /* synqTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = synqTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07EAB9462DE9EBE200282C1E /* synqUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = synqUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0785EE8A2DEABEED00507B38 /* Exceptions for "synq" folder in "synq" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 07EAB92A2DE9EBE200282C1E /* synq */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		07EAB92D2DE9EBE200282C1E /* synq */ = {
+		07EAB92D2DE9EBE200282C1E /* info */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0785EE8A2DEABEED00507B38 /* Exceptions for "synq" folder in "synq" target */,
-			);
-			path = synq;
+			path = info;
 			sourceTree = "<group>";
 		};
 		07EAB93F2DE9EBE200282C1E /* synqTests */ = {
@@ -118,7 +106,8 @@
 		07EAB9222DE9EBE100282C1E = {
 			isa = PBXGroup;
 			children = (
-				07EAB92D2DE9EBE200282C1E /* synq */,
+				07641DB92E1F4F6B008E2AFD /* Info.plist */,
+				07EAB92D2DE9EBE200282C1E /* info */,
 				07EAB93F2DE9EBE200282C1E /* synqTests */,
 				07EAB9492DE9EBE200282C1E /* synqUITests */,
 				0785EE992DECA66F00507B38 /* Frameworks */,
@@ -152,7 +141,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				07EAB92D2DE9EBE200282C1E /* synq */,
+				07EAB92D2DE9EBE200282C1E /* info */,
 			);
 			name = synq;
 			packageProductDependencies = (
@@ -443,14 +432,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = synq/synq.entitlements;
+				CODE_SIGN_ENTITLEMENTS = synq.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"synq/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"info/Preview Content\"";
 				DEVELOPMENT_TEAM = 75996NN4S4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_FILE[sdk=*]" = "$(SRCROOT)/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -483,14 +473,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = synq/synq.entitlements;
+				CODE_SIGN_ENTITLEMENTS = synq.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"synq/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"info/Preview Content\"";
 				DEVELOPMENT_TEAM = 75996NN4S4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_FILE[sdk=*]" = "$(SRCROOT)/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
